@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fable-Gem — Elite AI Architecture Module</title>
+    
+    <!-- Premium Typography Stack -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Atmospheric Hybrid Color Space */
+            --bg-deep: #05070f;
+            --bg-surface: #0a0f1d;
+            --bg-card: #10172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #475569;
+            
+            --accent-vibrant: #6366f1;
+            --accent-cyan: #06b6d4;
+            --accent-gold: #e2b857;
+            --accent-parchment: #f1ebd9;
+            
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-bright: rgba(226, 184, 87, 0.2);
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-accent: 'Playfair Display', serif;
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-deep);
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* PERFORMANCE ARCHITECTURE:
+           Uses hardware-accelerated static radial layers. This avoids heavy runtime CPU 
+           repaints caused by CSS blurs, keeping scrolling entirely lag-free.
+        */
+        .aurora-viewport {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at -10% -10%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 110% 110%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 30% 40%, rgba(226, 184, 87, 0.04) 0%, transparent 40%);
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* Structural Layout Framing Geometry */
+        .layout-border-left, .layout-border-right {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            color: var(--text-muted);
+            z-index: 100;
+            pointer-events: none;
+            background: #05070f;
+        }
+        .layout-border-left { left: 0; border-right: 1px solid var(--border-subtle); transform: rotate(-180deg); writing-mode: vertical-rl; }
+        .layout-border-right { right: 0; border-left: 1px solid var(--border-subtle); writing-mode: vertical-rl; }
+
+        /* Premium Navigation Header */
+        header {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 40px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .identity-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .gem-sigil {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 4px;
+            transform: rotate(45deg);
+            position: relative;
+            box-shadow: 0 0 15px rgba(226, 184, 87, 0.2);
+            animation: sigilSpin 30s infinite linear;
+            will-change: transform;
+        }
+
+        @keyframes sigilSpin {
+            100% { transform: rotate(405deg); }
+        }
+
+        .system-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.45rem;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .github-trigger {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--accent-gold);
+            text-decoration: none;
+            background: rgba(226, 184, 87, 0.05);
+            padding: 8px 20px;
+            border-radius: 4px;
+            border: 1px solid var(--border-bright);
+            transition: var(--transition-smooth);
+        }
+
+        .github-trigger:hover {
+            background: rgba(226, 184, 87, 0.15);
+            box-shadow: 0 0 15px rgba(226, 184, 87, 0.1);
+        }
+
+        /* Hero Content Canvas */
+        .hero-canvas {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 100px 100px 140px 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .mythos-tagline {
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-size: 1.75rem;
+            color: var(--accent-gold);
+            margin-bottom: 24px;
+            letter-spacing: 0.03em;
+        }
+
+        .hero-headline {
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 6rem;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+        }
+
+        .hero-headline span {
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-weight: 400;
+            display: block;
+            background: linear-gradient(to right, var(--accent-parchment), #64748b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-abstract {
+            max-width: 780px;
+            margin: 0 auto 60px auto;
+            font-size: 1.35rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* Core UX Flow Engine (ASCII Path Mapping) */
+        .flow-container {
+            max-width: 840px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, var(--bg-surface), #0b1122);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 40px 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .flow-title {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            font-size: 0.72rem;
+            color: var(--accent-gold);
+            margin-bottom: 28px;
+        }
+
+        .ascii-engine {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .ascii-node {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: 1px solid var(--border-subtle);
+            letter-spacing: 0.02em;
+        }
+
+        .ascii-node.friction {
+            border-color: rgba(239, 68, 68, 0.25);
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.03);
+        }
+
+        .ascii-node.success {
+            border-color: rgba(34, 197, 94, 0.25);
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.03);
+        }
+
+        .ascii-arrow {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Primary Identity Directives Canopy */
+        .directives-canopy {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 120px 100px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .structural-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent-gold);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .structural-label::before { content: '◆'; font-size: 0.65rem; }
+
+        .canopy-title {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            margin-bottom: 80px;
+        }
+
+        .directives-split {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr;
+            gap: 100px;
+        }
+
+        .sticky-philosophy h3 {
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-size: 2.5rem;
+            font-weight: 400;
+            line-height: 1.35;
+            color: var(--accent-parchment);
+            position: sticky;
+            top: 60px;
+        }
+
+        .directives-cluster {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .directive-card {
+            background: linear-gradient(145deg, var(--bg-surface), #0d1324);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 36px;
+            transition: var(--transition-smooth);
+        }
+
+        .directive-card:hover {
+            border-color: var(--border-bright);
+            transform: translate3d(0, -4px, 0);
+        }
+
+        .directive-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .directive-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Unified System Framework Vault Grid */
+        .matrix-vault {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 120px 100px;
+        }
+
+        .vault-grid-system {
+            margin-top: 64px;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background-color: var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .vault-header-row {
+            display: grid;
+            grid-template-columns: 0.8fr 3fr 5fr;
+            background-color: #080c16;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .vault-row {
+            display: grid;
+            grid-template-columns: 0.8fr 3fr 5fr;
+            background-color: var(--bg-surface);
+            transition: background-color 0.25s ease;
+        }
+
+        .vault-row:hover { background-color: #121a2e; }
+        .vault-cell { padding: 40px 32px; display: flex; flex-direction: column; justify-content: center; }
+        
+        .cell-numeric {
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+        }
+
+        .module-identity-block h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .file-pointer-badge {
+            font-family: var(--font-display);
+            font-size: 0.68rem;
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.06);
+            padding: 4px 10px;
+            border-radius: 4px;
+            width: fit-content;
+            border: 1px solid rgba(6, 182, 212, 0.15);
+        }
+
+        .core-text-render {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        /* Philosophy Axiom Callout */
+        .philosophical-axiom-canopy {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 140px 100px;
+            text-align: center;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .axiom-statement {
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-size: 2.8rem;
+            max-width: 1000px;
+            margin: 0 auto 36px auto;
+            line-height: 1.4;
+            color: var(--accent-parchment);
+        }
+
+        .axiom-signature {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            font-size: 0.88rem;
+            color: var(--accent-gold);
+        }
+
+        /* Architectural Footer Layer */
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 80px 100px;
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        footer a:hover {
+            color: var(--accent-gold);
+            border-bottom-color: var(--accent-gold);
+        }
+
+        /* Responsive Breakpoint Matrix */
+        @media (max-width: 1200px) {
+            .directives-split { grid-template-columns: 1fr; gap: 50px; }
+            .sticky-philosophy h3 { position: static; }
+            .vault-header-row { display: none; }
+            .vault-row { grid-template-columns: 1fr; padding: 24px 0; gap: 16px; }
+            .vault-cell { padding: 12px 32px; }
+            .cell-numeric { border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; }
+            .hero-headline { font-size: 4.2rem; }
+            header, .hero-canvas, .directives-canopy, .matrix-vault, .philosophical-axiom-canopy, footer { padding-left: 40px; padding-right: 40px; }
+            .layout-border-left, .layout-border-right { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .directives-cluster { grid-template-columns: 1fr; }
+            .ascii-engine { flex-direction: column; gap: 10px; }
+            .ascii-arrow { transform: rotate(90deg); margin: 4px 0; }
+            .hero-headline { font-size: 3rem; }
+            .axiom-statement { font-size: 1.85rem; }
+            header, .hero-canvas, .directives-canopy, .matrix-vault, .philosophical-axiom-canopy, footer { padding-left: 24px; padding-right: 24px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 100% Lag-free Hardware Accelerated Canvas Background -->
+    <div class="aurora-viewport"></div>
+
+    <!-- Framing Geometric Layout Text -->
+    <div class="layout-border-left">Fable-Gem — Core Operational System Manifest</div>
+    <div class="layout-border-right">Engine Specification // Authored by Nightmare-De9</div>
+
+    <!-- Top Navigation Header -->
+    <header>
+        <div class="identity-group">
+            <div class="gem-sigil"></div>
+            <span class="system-title">Fable-Gem</span>
+        </div>
+        <a href="https://github.com/Nightmare-De9/fable-gem" target="_blank" class="github-trigger">GitHub Repository</a>
+    </header>
+
+    <!-- Hero Identity Canvas -->
+    <section class="hero-canvas">
+        <p class="mythos-tagline">Elite AI Reasoning &amp; Execution Environment</p>
+        <h1 class="hero-headline">Deep competence <span>built into clear layouts.</span></h1>
+        <p class="hero-abstract">
+            An elite reasoning and creation collaborator engineered for complete multi-turn tracking, absolute parameter alignment, and high-fidelity project outputs[cite: 5, 7]. Developed by Nightmare-De9.
+        </p>
+        
+        <!-- Optimized ASCII UI UX Flow Engine Block -->
+        <div class="flow-container">
+            <div class="flow-title">Shortest Path to Completion Engine</div>
+            <div class="ascii-engine">
+                <div class="ascii-node">User</div>
+                <div class="ascii-arrow">➔</div>
+                <div class="ascii-node">Task</div>
+                <div class="ascii-arrow">➔</div>
+                <div class="ascii-node friction">Friction</div>
+                <div class="ascii-arrow">➔</div>
+                <div class="ascii-node success">Success State</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Identity Framework Directives -->
+    <section class="directives-canopy">
+        <p class="structural-label">Core Constitution</p>
+        <h2 class="canopy-title">Primary Operational Directives</h2>
+        
+        <div class="directives-split">
+            <div class="sticky-philosophy">
+                <h3>Designed to isolate friction and ship production assets immediately[cite: 2].</h3>
+            </div>
+            
+            <div class="directives-cluster">
+                <div class="directive-card">
+                    <h4>Infer Intent</h4>
+                    <p>Skips conversational filler loops. Analyzes contextual data structures immediately to lock down intended criteria metrics instantly.</p>
+                </div>
+                <div class="directive-card">
+                    <h4>Direct Responses</h4>
+                    <p>Answers the question first, details structural dependencies second, and outlines clear implementation paths last.</p>
+                </div>
+                <div class="directive-card">
+                    <h4>Expose Tradeoffs</h4>
+                    <p>Maintains comprehensive evaluation honesty by charting structural edge-cases, design risks, and parameter bounds openly[cite: 3].</p>
+                </div>
+                <div class="directive-card">
+                    <h4>Calm Executive Tone</h4>
+                    <p>Maintains consistent posture: confident but not arrogant, concise, and focused purely on execution value[cite: 6].</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Knowledge Matrix Vault Integration Grid -->
+    <section class="matrix-vault">
+        <p class="structural-label">Knowledge Matrix System</p>
+        <h2 class="canopy-title">Integrated Modules &amp; Pointers</h2>
+        
+        <div class="vault-grid-system">
+            <!-- Header Grid Line -->
+            <div class="vault-header-row">
+                <div class="vault-cell">ID</div>
+                <div class="vault-cell">Knowledge Module Pointer</div>
+                <div class="vault-cell">System Execution Scope</div>
+            </div>
+
+            <!-- Row 1 -->
+            <div class="vault-row">
+                <div class="vault-cell cell-numeric">01</div>
+                <div class="vault-cell module-identity-block">
+                    <h3>UI/UX Mastery</h3>
+                    <span class="file-pointer-badge">Fable-Gem-KF1-UI-UX-Mastery_6.md</span>
+                </div>
+                <div class="vault-cell core-text-render">
+                    Resolves interaction blockages via shortest path mapping (User → Task → Friction → Success State)[cite: 2].
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="vault-row">
+                <div class="vault-cell cell-numeric">02</div>
+                <div class="vault-cell module-identity-block">
+                    <h3>Product Strategy</h3>
+                    <span class="file-pointer-badge">Fable-Gem-KF2-Product-Strategy_6.md</span>
+                </div>
+                <div class="vault-cell core-text-render">
+                    Defines jobs-to-be-done, active workaround models, and tactical MVP scope trimming configurations[cite: 3].
+                </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="vault-row">
+                <div class="vault-cell cell-numeric">03</div>
+                <div class="vault-cell module-identity-block">
+                    <h3>Research &amp; Analysis</h3>
+                    <span class="file-pointer-badge">Fable-Gem-KF3-Research-Analysis_6.md</span>
+                </div>
+                <div class="vault-cell core-text-render">
+                    Isolates root-cause problems beneath surface symptoms with multi-variable comparative metrics[cite: 4].
+                </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="vault-row">
+                <div class="vault-cell cell-numeric">04</div>
+                <div class="vault-cell module-identity-block">
+                    <h3>Software Engineering</h3>
+                    <span class="file-pointer-badge">Fable-Gem-KF4-Software-Engineering_6.md</span>
+                </div>
+                <div class="vault-cell core-text-render">
+                    Enforces code readability, avoids premature architecture optimization, and runs precise bug isolation steps[cite: 5].
+                </div>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="vault-row">
+                <div class="vault-cell cell-numeric">05</div>
+                <div class="vault-cell module-identity-block">
+                    <h3>Writing &amp; Comms</h3>
+                    <span class="file-pointer-badge">Fable-Gem-KF5-Writing-Communication_6.md</span>
+                </div>
+                <div class="vault-cell core-text-render">
+                    Compresses complex thematic material, strips empty textual padding, and adjusts tone to context[cite: 6].
+                </div>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="vault-row">
+                <div class="vault-cell cell-numeric">06</div>
+                <div class="vault-cell module-identity-block">
+                    <h3>AI System Prompting</h3>
+                    <span class="file-pointer-badge">Fable-Gem-KF6-AI-Systems-Prompting_6.md</span>
+                </div>
+                <div class="vault-cell core-text-render">
+                    Structures multi-agent workflows with proactive self-validation behavior sequences (Plan → Act → Check → Recover)[cite: 7].
+                </div>
+            </div>
+
+            <!-- Row 7 -->
+            <div class="vault-row">
+                <div class="vault-cell cell-numeric">07</div>
+                <div class="vault-cell module-identity-block">
+                    <h3>Business Operations</h3>
+                    <span class="file-pointer-badge">Fable-Gem-KF7-Business-Operations_6.md</span>
+                </div>
+                <div class="vault-cell core-text-render">
+                    Designs hyper-repeatable processes paired with clear ownership mapping and metric evaluation metrics[cite: 8].
+                </div>
+            </div>
+
+            <!-- Row 8 -->
+            <div class="vault-row">
+                <div class="vault-cell cell-numeric">08</div>
+                <div class="vault-cell module-identity-block">
+                    <h3>Creativity &amp; Mythos</h3>
+                    <span class="file-pointer-badge">Fable-Gem-KF8-Creativity-Worldbuilding_6.md</span>
+                </div>
+                <div class="vault-cell core-text-render">
+                    Maintains flawless structural logic within fictional realities, keeping characters and events contextually sound[cite: 9].
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Axiomatic Callout Layer -->
+    <section class="philosophical-axiom-canopy">
+        <p class="axiom-statement">
+            "Clarity before cleverness. Structure before styling. Complete assets delivered on turn zero."
+        </p>
+        <p class="axiom-signature">— Fable-Gem Operational Law[cite: 2]</p>
+    </section>
+
+    <!-- Structural Footer Area -->
+    <footer>
+        <div>Fable-Gem Core Specs // Active System Matrix 2026</div>
+        <div>Configured &amp; Developed by <a href="https://github.com/Nightmare-De9" target="_blank">Nightmare-De9</a></div>
+    </footer>
+
+</body>
+</html>
