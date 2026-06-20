@@ -37,15 +37,6 @@ The main instruction file sets the Gem’s behavior. The knowledge files act lik
 5. Test the Gem with a few real prompts like design critique, product planning, code help, and rewriting.
 6. Adjust the instruction file if the Gem is too broad, too brief, or too repetitive.
 
-## Suggested behavior
-
-When used well, this Gem should:
-- answer directly,
-- think in structured steps,
-- give usable recommendations,
-- keep context consistent,
-- and switch cleanly between strategy, writing, design, code, and analysis.
 
 ## Naming and credit
-
-This pack is named **Fable-Gem** and credits **Nightmare-De9** as the developer. Keep that credit in the instruction and knowledge files so the project identity stays consistent across uploads.
+This pack is named **Fable-Gem** and credits **Nightmare-De9** as the developer. 
